@@ -3,6 +3,9 @@
 namespace Config;
 
 // Create a new instance of our RouteCollection class.
+use App\Controllers\Board;
+use CodeIgniter\Controller;
+
 $routes = Services::routes();
 
 /*
@@ -19,7 +22,7 @@ $routes->set404Override();
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
 // Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
-// $routes->setAutoRoute(false);
+//$routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -31,6 +34,22 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->get('board', 'Board::index');
+$routes->get('board/create', 'Board::create');
+$routes->post('board/create', 'Board::store');
+
+$routes->group('admin', static function ($routes) {
+    $routes->group('board', static function ($routes) {
+        $routes->get('', 'Admin\Board::index');
+        $routes->get('create', 'Admin\Board::create');
+        $routes->get('update/(:num)', 'Admin\Board::update/$1');
+        $routes->get('view/(:num)', 'Admin\Board::view/$1');
+        $routes->get('delete/(:num)', 'Admin\Board::delete/$1');
+        $routes->post('store', 'Admin\Board::store');
+    });
+});
+
+$routes->get('imageRender/(:any)', 'RenderImage::index/$1/$2');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
