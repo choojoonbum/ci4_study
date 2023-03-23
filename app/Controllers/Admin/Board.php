@@ -5,7 +5,6 @@ use Config\Services;
 
 class Board extends AdminController
 {
-    protected $helpers = ['form'];
     protected $model;
     protected $boardId;
 

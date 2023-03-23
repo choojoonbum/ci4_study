@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Validation\MyRules;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Validation\StrictRules\CreditCardRules;
 use CodeIgniter\Validation\StrictRules\FileRules;
@@ -25,6 +26,7 @@ class Validation extends BaseConfig
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
+        MyRules::class,
     ];
 
     /**
@@ -72,6 +74,23 @@ class Validation extends BaseConfig
                 . '|mime_in[attach,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
                 . '|max_size[attach,100]'
                 . '|max_dims[attach,1024,768]',
+        ],
+    ];
+
+    public $loginRules = [
+        'email' => [
+            'rules'  => 'required|valid_email',
+            'errors' => [
+                'required' => 'You must choose a email.',
+                'valid_email' => 'Email error.',
+            ],
+        ],
+        'password' => [
+            'rules'  => 'required|min_length[5]',
+            'errors' => [
+                'required' => 'You must choose a password.',
+                'min_length' => 'Your title is too short. You want to get hacked?',
+            ],
         ],
     ];
 

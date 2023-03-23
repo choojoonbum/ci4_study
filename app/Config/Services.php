@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Service\CjbTest;
+use App\Service\MemberService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -20,13 +20,10 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-    public static function cjbtester($getShared = true)
-    {
-        if ($getShared)
-        {
-            return static::getSharedInstance('cjbtester');
+    public static function memberService($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('memberService');
         }
-
-        return new CjbTest();
+        return new MemberService();
     }
 }

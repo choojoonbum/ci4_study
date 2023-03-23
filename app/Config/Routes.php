@@ -22,7 +22,7 @@ $routes->set404Override();
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
 // Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
-//$routes->setAutoRoute(false);
+// $routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -38,7 +38,12 @@ $routes->get('board', 'Board::index');
 $routes->get('board/create', 'Board::create');
 $routes->post('board/create', 'Board::store');
 
-$routes->group('admin', static function ($routes) {
+$routes->get('member/login', 'Members::login');
+$routes->get('member/logout', 'Members::logout');
+$routes->post('member/login', 'Members::auth');
+
+$routes->group('admin',['filter' => 'AdminAuth'], static function ($routes) {
+    $routes->get('', 'Admin\Board::index');
     $routes->group('board', static function ($routes) {
         $routes->get('', 'Admin\Board::index');
         $routes->get('create', 'Admin\Board::create');
@@ -46,6 +51,11 @@ $routes->group('admin', static function ($routes) {
         $routes->get('view/(:num)', 'Admin\Board::view/$1');
         $routes->get('delete/(:num)', 'Admin\Board::delete/$1');
         $routes->post('store', 'Admin\Board::store');
+    });
+    $routes->group('member', static function ($routes) {
+        $routes->get('', 'Admin\Members::index');
+        $routes->get('create', 'Admin\Members::create');
+        $routes->post('create', 'Admin\Members::store');
     });
 });
 

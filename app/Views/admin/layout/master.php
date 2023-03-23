@@ -87,5 +87,11 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/static/lib/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
 <?= $this->renderSection('script') ?>
+<script>
+    var massage = '<?= session()->getFlashdata('message') ?>';
+    if (massage != '') {
+        alert(massage);
+    }
+</script>
 </body>
 </html>

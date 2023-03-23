@@ -10,7 +10,6 @@ class Board extends BaseController
     }
 
     public function create() {
-        helper('form');
         return view('board/write');
     }
 
